@@ -25,7 +25,14 @@ const Register = () => {
     return (
       <>
         <form onSubmit={handleSubmit}>
-          <input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input
+            type="email"
+            className="form-control"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Your email"
+          />
+          <br />
           <button className="btn btn-primary">Register</button>
         </form>
       </>
