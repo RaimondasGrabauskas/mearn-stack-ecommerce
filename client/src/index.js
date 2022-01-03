@@ -16,7 +16,7 @@ const store = createStore(rootReducer, composeWithDevTools());
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider>
+    <Provider store={store}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
