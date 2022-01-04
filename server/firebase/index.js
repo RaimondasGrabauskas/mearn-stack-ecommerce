@@ -5,3 +5,5 @@ var serviceAccount = require('../config/fireBaseServiceAccountKey.json');
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
+
+module.exports = admin;
