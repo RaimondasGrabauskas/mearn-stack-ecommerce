@@ -12,6 +12,7 @@ import ForgotPassword from './pages/auth/ForgotPassword';
 
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
+import { currentUser } from './utils/request';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ const App = () => {
           },
         });
       }
+      console.log('user', user);
     });
     return () => {
       unSubscribe();

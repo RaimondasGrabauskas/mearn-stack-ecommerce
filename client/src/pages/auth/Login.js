@@ -6,6 +6,7 @@ import { auth, googleProvider } from '../../firebase';
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { createOrUpdateUser } from '../../utils/request';
 
 const Login = () => {
   const [email, setEmail] = useState('rggrabauskas@gmail.com');
@@ -28,14 +29,22 @@ const Login = () => {
       const result = await signInWithEmailAndPassword(auth, email, password);
       const { user } = result;
       const idTokenResult = await user.getIdTokenResult();
+      createOrUpdateUser(idTokenResult.token)
+        .then((res) => {
+          const { name, email, role, _id } = res.data;
+          dispatch({
+            type: 'LOGGED_IN_USER',
+            payload: {
+              name,
+              email,
+              token: idTokenResult.token,
+              role,
+              _id,
+            },
+          });
+        })
+        .catch((error) => console.log(error.message));
 
-      dispatch({
-        type: 'LOGGED_IN_USER',
-        payload: {
-          email: user.email,
-          token: idTokenResult.token,
-        },
-      });
       navigate('/');
     } catch (error) {
       console.log(error);
@@ -49,13 +58,21 @@ const Login = () => {
       .then(async (result) => {
         const { user } = result;
         const idTokenResult = await user.getIdTokenResult();
-        dispatch({
-          type: 'LOGGED_IN_USER',
-          payload: {
-            email: user.email,
-            token: idTokenResult.token,
-          },
-        });
+        createOrUpdateUser(idTokenResult.token)
+          .then((res) => {
+            const { name, email, role, _id } = res.data;
+            dispatch({
+              type: 'LOGGED_IN_USER',
+              payload: {
+                name,
+                email,
+                token: idTokenResult.token,
+                role,
+                _id,
+              },
+            });
+          })
+          .catch((error) => console.log(error.message));
         navigate('/');
       })
       .catch((error) => {

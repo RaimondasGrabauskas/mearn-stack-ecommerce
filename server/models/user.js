@@ -8,7 +8,7 @@ const userSchema = new Schema(
     email: {
       type: String,
       required: true,
-      index: ture,
+      index: true,
     },
     role: {
       type: String,
