@@ -57,7 +57,7 @@ const App = () => {
         <Route exact path="/forgot/password" element={<ForgotPassword />} />
         <Route
           exact
-          path="/user/history"
+          path="/user/history/*"
           element={
             <UserRoute>
               <History />
