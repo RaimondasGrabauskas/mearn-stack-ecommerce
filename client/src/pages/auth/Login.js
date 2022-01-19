@@ -14,12 +14,20 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const { user } = useSelector((state) => ({ ...state }));
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (user && user.token) navigate('/');
   }, [user]);
+
+  const roleBasedRedirect = (res) => {
+    if (res.data.role === 'admin') {
+      navigate('/admin/dashboard');
+    } else {
+      navigate('/user/history');
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,10 +50,9 @@ const Login = () => {
               _id,
             },
           });
+          roleBasedRedirect(res);
         })
         .catch((error) => console.log(error.message));
-
-      navigate('/');
     } catch (error) {
       console.log(error);
       toast.error(error.message);

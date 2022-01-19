@@ -21,20 +21,27 @@ const App = () => {
     const unSubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         const { token } = await user.getIdTokenResult();
-        dispatch({
-          type: 'LOGGED_IN_USER',
-          payload: {
-            email: user.email,
-            token: token,
-          },
-        });
+        currentUser(token)
+          .then((res) => {
+            const { name, email, role, _id } = res.data;
+            dispatch({
+              type: 'LOGGED_IN_USER',
+              payload: {
+                name,
+                email,
+                token: token,
+                role,
+                _id,
+              },
+            });
+          })
+          .catch((error) => console.log(error.message));
       }
-      console.log('user', user);
     });
     return () => {
       unSubscribe();
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
