@@ -9,10 +9,12 @@ import Register from './pages/auth/Register';
 import RegisterComplete from './pages/auth/RegisterComplete';
 import Home from './pages/Home';
 import ForgotPassword from './pages/auth/ForgotPassword';
+import UserRoute from './component/routes/UserRoute';
 
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
 import { currentUser } from './utils/request';
+import History from './pages/user/History';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -48,11 +50,20 @@ const App = () => {
       <Header />
       <ToastContainer />
       <Routes>
-        <Route path="/" exact element={<Home />} />
-        <Route path="/login" exact element={<Login />} />
-        <Route path="/register" exact element={<Register />} />
-        <Route path="/register/complete" exact element={<RegisterComplete />} />
-        <Route path="/forgot/password" exact element={<ForgotPassword />} />
+        <Route exact path="/" element={<Home />} />
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/register" element={<Register />} />
+        <Route exact path="/register/complete" element={<RegisterComplete />} />
+        <Route exact path="/forgot/password" element={<ForgotPassword />} />
+        <Route
+          exact
+          path="/user/history"
+          element={
+            <UserRoute>
+              <History />
+            </UserRoute>
+          }
+        />
       </Routes>
     </>
   );
