@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Outlet, Route, Routes, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
@@ -57,7 +57,7 @@ const App = () => {
         <Route exact path="/forgot/password" element={<ForgotPassword />} />
         <Route
           exact
-          path="/user/history/*"
+          path="/user/history"
           element={
             <UserRoute>
               <History />

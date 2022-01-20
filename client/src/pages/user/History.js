@@ -2,7 +2,9 @@ const History = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col">user page</div>
+        <div className="col">
+          <h1>User Page</h1>
+        </div>
       </div>
     </div>
   );
