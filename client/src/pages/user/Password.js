@@ -16,12 +16,12 @@ const Password = () => {
   //   return reauthenticateWithCredential(user, credential);
   // };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     const user = auth.currentUser;
 
-    updatePassword(user, newPassword)
+    await updatePassword(user, newPassword)
       .then(() => {
         setLoading(false);
         setNewPassword('');
