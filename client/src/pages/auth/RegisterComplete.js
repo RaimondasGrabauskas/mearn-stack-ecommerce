@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { registrationComplete, auth } from '../../firebase';
 import { toast } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createOrUpdateUser } from '../../utils/request';
 import { useNavigate } from 'react-router-dom';
 
-const RegisterComplete = ({ history }) => {
+const RegisterComplete = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const { user } = useSelector((state) => ({ ...state }));
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

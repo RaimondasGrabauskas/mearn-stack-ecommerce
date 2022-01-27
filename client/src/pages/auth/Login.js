@@ -10,7 +10,7 @@ import { createOrUpdateUser } from '../../utils/request';
 
 const Login = () => {
   const [email, setEmail] = useState('rggrabauskas@gmail.com');
-  const [password, setPassword] = useState('123456');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   const { user } = useSelector((state) => ({ ...state }));

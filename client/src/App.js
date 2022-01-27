@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Outlet, Route, Routes, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
@@ -10,6 +10,8 @@ import RegisterComplete from './pages/auth/RegisterComplete';
 import Home from './pages/Home';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import UserRoute from './component/routes/UserRoute';
+import Password from './pages/user/Password';
+import WishList from './pages/user/WishList';
 
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
@@ -61,6 +63,24 @@ const App = () => {
           element={
             <UserRoute>
               <History />
+            </UserRoute>
+          }
+        />
+        <Route
+          exact
+          path="/user/password"
+          element={
+            <UserRoute>
+              <Password />
+            </UserRoute>
+          }
+        />
+        <Route
+          exact
+          path="/user/wishlist"
+          element={
+            <UserRoute>
+              <WishList />
             </UserRoute>
           }
         />
