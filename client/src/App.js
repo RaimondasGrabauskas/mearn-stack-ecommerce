@@ -9,9 +9,12 @@ import Register from './pages/auth/Register';
 import RegisterComplete from './pages/auth/RegisterComplete';
 import Home from './pages/Home';
 import ForgotPassword from './pages/auth/ForgotPassword';
-import UserRoute from './component/routes/UserRoute';
 import Password from './pages/user/Password';
 import WishList from './pages/user/WishList';
+import AdminDash from './pages/admin/AdminDas';
+
+import UserRoute from './component/routes/UserRoute';
+import AdminRoute from './component/routes/AdminRoute';
 
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
@@ -82,6 +85,15 @@ const App = () => {
             <UserRoute>
               <WishList />
             </UserRoute>
+          }
+        />
+        <Route
+          exact
+          path="/admin/dashboard"
+          element={
+            <AdminRoute>
+              <AdminDash />
+            </AdminRoute>
           }
         />
       </Routes>

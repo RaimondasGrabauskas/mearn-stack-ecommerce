@@ -13,7 +13,7 @@ const {
 
 router.post('/category', authCheck, adminCheck, createCategorys);
 router.get('/categories', listCategorys);
-router.get('/category/:slug', authCheck, adminCheck, readCategorys);
+router.get('/category/:slug', readCategorys);
 router.put('/update/category/:slug', authCheck, adminCheck, updateCategorys);
 router.delete('/delete/category/:slug', authCheck, adminCheck, removeCategorys);
 
