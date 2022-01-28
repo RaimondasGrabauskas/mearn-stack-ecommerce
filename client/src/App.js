@@ -12,6 +12,7 @@ import ForgotPassword from './pages/auth/ForgotPassword';
 import Password from './pages/user/Password';
 import WishList from './pages/user/WishList';
 import AdminDash from './pages/admin/AdminDas';
+import CategoryCreate from './pages/admin/category/CategoryCreate';
 
 import UserRoute from './component/routes/UserRoute';
 import AdminRoute from './component/routes/AdminRoute';
@@ -93,6 +94,15 @@ const App = () => {
           element={
             <AdminRoute>
               <AdminDash />
+            </AdminRoute>
+          }
+        />
+        <Route
+          exact
+          path="/admin/category"
+          element={
+            <AdminRoute>
+              <CategoryCreate />
             </AdminRoute>
           }
         />

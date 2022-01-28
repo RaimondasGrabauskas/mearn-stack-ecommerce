@@ -1,16 +1,16 @@
-import AdminNav from '../../component/nav/AdminNav';
+import AdminNav from '../../../component/nav/AdminNav';
 
-const AdminDash = () => {
+const CategoryCreate = () => {
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-2">
           <AdminNav />
         </div>
-        <div className="col">Admin dashboard page</div>
+        <div className="col">Category create page</div>
       </div>
     </div>
   );
 };
 
-export default AdminDash;
+export default CategoryCreate;
