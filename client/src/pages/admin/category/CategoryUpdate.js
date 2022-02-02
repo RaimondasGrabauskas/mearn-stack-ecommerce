@@ -1,47 +1,34 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AdminNav from '../../../component/nav/AdminNav';
-import { createCategory, getCategories, deleteCategory } from './../../../utils/categoryRequest';
-import SingleCategory from './SingleCategory';
+import { getSingleCategory, updateCategory } from './../../../utils/categoryRequest';
 
-const CategoryCreate = () => {
+const CategoryUpdate = () => {
   const { user } = useSelector((state) => ({ ...state }));
 
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
-  const [categories, setCategories] = useState([]);
+
+  const navigate = useNavigate();
+  let { slug } = useParams();
 
   useEffect(() => {
-    loadCategories();
+    loadCategory();
   }, []);
 
-  const loadCategories = () => getCategories().then((c) => setCategories(c.data));
+  const loadCategory = () => getSingleCategory(slug).then((c) => setName(c.data.name));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await createCategory({ name }, user.token)
+    await updateCategory(slug, { name }, user.token)
       .then((res) => {
         setLoading(false);
         setName('');
-        toast.success(`"${res.data.name}" is created`);
-        loadCategories();
-      })
-      .catch((err) => {
-        setLoading(false);
-        if (err.response.status === 400) toast.error(err.response.data);
-      });
-  };
-
-  const handleRemove = async (slug) => {
-    setLoading(true);
-
-    await deleteCategory(slug, user.token)
-      .then((res) => {
-        setLoading(false);
-        toast.success(`"${res.data.name}" deleted`);
-        loadCategories();
+        toast.success(`"${res.data.name}" is updated`);
+        navigate('/admin/category');
       })
       .catch((err) => {
         setLoading(false);
@@ -73,15 +60,12 @@ const CategoryCreate = () => {
           <AdminNav />
         </div>
         <div className="col">
-          {loading ? <h4 className="text-danger">Loading...</h4> : <h4>Create category</h4>}
+          {loading ? <h4 className="text-danger">Loading...</h4> : <h4>Update category</h4>}
           {categoryForm()}
-          {categories.map((c) => (
-            <SingleCategory key={c._id} category={c} onHandleRemove={handleRemove} />
-          ))}
         </div>
       </div>
     </div>
   );
 };
 
-export default CategoryCreate;
+export default CategoryUpdate;
