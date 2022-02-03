@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import CategoryForm from '../../../component/forms/CategoryForm';
 import AdminNav from '../../../component/nav/AdminNav';
 import { getSingleCategory, updateCategory } from './../../../utils/categoryRequest';
 
@@ -36,23 +37,6 @@ const CategoryUpdate = () => {
       });
   };
 
-  const categoryForm = () => {
-    return (
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Name</label>
-          <input
-            type="text"
-            className="form-control"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            autoFocus
-          />
-          <button className="btn btn-outline-primary mt-3">Save</button>
-        </div>
-      </form>
-    );
-  };
   return (
     <div className="container-fluid">
       <div className="row">
@@ -61,7 +45,7 @@ const CategoryUpdate = () => {
         </div>
         <div className="col">
           {loading ? <h4 className="text-danger">Loading...</h4> : <h4>Update category</h4>}
-          {categoryForm()}
+          <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />
         </div>
       </div>
     </div>

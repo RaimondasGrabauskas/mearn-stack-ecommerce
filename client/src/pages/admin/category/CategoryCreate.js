@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import AdminNav from '../../../component/nav/AdminNav';
 import { createCategory, getCategories, deleteCategory } from './../../../utils/categoryRequest';
 import SingleCategory from './SingleCategory';
+import CategoryForm from '../../../component/forms/CategoryForm';
+import LocalSearch from '../../../component/forms/LocalSearch';
 
 const CategoryCreate = () => {
   const { user } = useSelector((state) => ({ ...state }));
@@ -11,6 +13,8 @@ const CategoryCreate = () => {
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
+
+  const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
     loadCategories();
@@ -49,23 +53,13 @@ const CategoryCreate = () => {
       });
   };
 
-  const categoryForm = () => {
-    return (
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Name</label>
-          <input
-            type="text"
-            className="form-control"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            autoFocus
-          />
-          <button className="btn btn-outline-primary mt-3">Save</button>
-        </div>
-      </form>
-    );
+  const handleSearchChange = (e) => {
+    e.preventDefault();
+    setKeyword(e.target.value.toLowerCase());
   };
+
+  const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -74,8 +68,11 @@ const CategoryCreate = () => {
         </div>
         <div className="col">
           {loading ? <h4 className="text-danger">Loading...</h4> : <h4>Create category</h4>}
-          {categoryForm()}
-          {categories.map((c) => (
+          <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />
+
+          <LocalSearch keyword={keyword} handleSearchChange={handleSearchChange} />
+
+          {categories.filter(searched(keyword)).map((c) => (
             <SingleCategory key={c._id} category={c} onHandleRemove={handleRemove} />
           ))}
         </div>
