@@ -23,11 +23,11 @@ exports.readSubCategorys = async (req, res) => {
 
 exports.updateSubCategorys = async (req, res) => {
   let subCategorySlug = req.params.slug;
-  const { name } = req.body;
+  const { name, parent } = req.body;
   try {
     const subCategoryOnUpdate = await SubCategory.findOneAndUpdate(
       { slug: subCategorySlug },
-      { name, slug: slugify(name) },
+      { name, parent, slug: slugify(name) },
       { new: true }
     );
     res.json(subCategoryOnUpdate);

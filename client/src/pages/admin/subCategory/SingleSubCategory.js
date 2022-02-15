@@ -8,7 +8,7 @@ const SingleSubCategory = ({ subCategory, onHandleRemove }) => {
       <span onClick={() => onHandleRemove(subCategory.slug)} className="btn btn-sm float-right">
         <DeleteOutlined className="text-danger" />
       </span>{' '}
-      <Link to={`/admin/subCategory/${subCategory.slug}`}>
+      <Link to={`/admin/sub/${subCategory.slug}`}>
         <span className="btn btn-sm float-right">
           <EditOutlined className="text-warning" />
         </span>

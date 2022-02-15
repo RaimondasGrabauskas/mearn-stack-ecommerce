@@ -15,6 +15,7 @@ import AdminDash from './pages/admin/AdminDas';
 import CategoryCreate from './pages/admin/category/CategoryCreate';
 import CategoryUpdate from './pages/admin/category/CategoryUpdate';
 import SubCategoryCreate from './pages/admin/subCategory/SubCategoryCreate';
+import SubCategoryUpdate from './pages/admin/subCategory/SubCategoryUpdate';
 
 import UserRoute from './component/routes/UserRoute';
 import AdminRoute from './component/routes/AdminRoute';
@@ -114,6 +115,15 @@ const App = () => {
           element={
             <AdminRoute>
               <CategoryUpdate />
+            </AdminRoute>
+          }
+        />
+        <Route
+          exact
+          path="/admin/sub/:slug"
+          element={
+            <AdminRoute>
+              <SubCategoryUpdate />
             </AdminRoute>
           }
         />
