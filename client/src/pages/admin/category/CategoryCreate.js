@@ -53,11 +53,6 @@ const CategoryCreate = () => {
       });
   };
 
-  const handleSearchChange = (e) => {
-    e.preventDefault();
-    setKeyword(e.target.value.toLowerCase());
-  };
-
   const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
 
   return (
@@ -70,7 +65,7 @@ const CategoryCreate = () => {
           {loading ? <h4 className="text-danger">Loading...</h4> : <h4>Create category</h4>}
           <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />
 
-          <LocalSearch keyword={keyword} handleSearchChange={handleSearchChange} />
+          <LocalSearch keyword={keyword} setKeyword={setKeyword} />
 
           {categories.filter(searched(keyword)).map((c) => (
             <SingleCategory key={c._id} category={c} onHandleRemove={handleRemove} />
