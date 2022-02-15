@@ -14,6 +14,7 @@ import WishList from './pages/user/WishList';
 import AdminDash from './pages/admin/AdminDas';
 import CategoryCreate from './pages/admin/category/CategoryCreate';
 import CategoryUpdate from './pages/admin/category/CategoryUpdate';
+import SubCategoryCreate from './pages/admin/subCategory/SubCategoryCreate';
 
 import UserRoute from './component/routes/UserRoute';
 import AdminRoute from './component/routes/AdminRoute';
@@ -113,6 +114,15 @@ const App = () => {
           element={
             <AdminRoute>
               <CategoryUpdate />
+            </AdminRoute>
+          }
+        />
+        <Route
+          exact
+          path="/admin/sub"
+          element={
+            <AdminRoute>
+              <SubCategoryCreate />
             </AdminRoute>
           }
         />
