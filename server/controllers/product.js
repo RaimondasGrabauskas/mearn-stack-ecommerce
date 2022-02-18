@@ -14,3 +14,8 @@ exports.createProduct = async (req, res) => {
     });
   }
 };
+
+exports.readProduct = async (req, res) => {
+  const products = await Product.find();
+  res.json(products);
+};
