@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
-const { objectId } = mongoose.Schema;
+const { ObjectId } = mongoose.Schema;
 
-const productSchema = new mongoose.Schema(
+const Schema = mongoose.Schema;
+
+const productSchema = new Schema(
   {
     title: {
       type: String,
@@ -28,24 +30,26 @@ const productSchema = new mongoose.Schema(
       trim: true,
       maxlength: 32,
     },
-    category: {
-      type: objectId,
-      ref: 'Category',
+    // category: {
+    //   type: ObjectId,
+    //   ref: 'Category',
+    // },
+    // subs: [
+    //   {
+    //     type: ObjectId,
+    //     ref: 'SubCategory',
+    //   },
+    // ],
+    quantity: {
+      type: Number,
     },
-    subs: [
-      {
-        type: objectId,
-        ref: 'SubCategory',
-      },
-    ],
-    quantity: Number,
     sold: {
       type: Number,
       default: 0,
     },
-    images: {
-      type: Array,
-    },
+    // images: {
+    //   type: Array,
+    // },
     shipping: {
       type: String,
       enum: ['Yes', 'No'],
@@ -61,7 +65,7 @@ const productSchema = new mongoose.Schema(
     // ratings: [
     //   {
     //     star: Number,
-    //     postedBy: { type: objectId, ref: 'user' },
+    //     postedBy: { type: ObjectId, ref: 'user' },
     //   },
     // ],
   },
