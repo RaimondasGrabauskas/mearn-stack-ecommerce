@@ -45,10 +45,13 @@ const ProductCreate = () => {
     createProduct(values, user.token)
       .then((res) => {
         console.log(res);
+        toast.success(`New product is created`);
+        // window.location.reload();
       })
       .catch((err) => {
         console.log(err);
-        if (err.response.status === 400) toast.error(err.response.data);
+        // if (err.response.status === 400) toast.error(err.response.data);
+        toast.error(err.response.data.err);
       });
   };
   const handleChange = (e) => {
