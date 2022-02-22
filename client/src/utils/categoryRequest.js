@@ -9,6 +9,8 @@ const getOneCategoryUrl = url + '/category/';
 const updateCategoryUrl = url + '/update/category/';
 const deleteCategoryUrl = url + '/delete/category/';
 
+const getCategorySubsUrl = url + '/category/subs/';
+
 export const getCategories = async () => await axios.get(getAllCategoriesUrl);
 
 export const getSingleCategory = async (slug) => await axios.get(getOneCategoryUrl + slug);
@@ -33,3 +35,5 @@ export const createCategory = async (categoryDetails, authtoken) =>
       authtoken,
     },
   });
+
+export const getCategorySubs = async (_id) => await axios.get(getCategorySubsUrl + _id);

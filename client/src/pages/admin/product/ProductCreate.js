@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import ProductCreateForm from '../../../component/forms/ProductCreateForm';
 import AdminNav from '../../../component/nav/AdminNav';
 import { createProduct } from './../../../utils/productRequest';
-import { getCategories } from './../../../utils/categoryRequest';
+import { getCategories, getCategorySubs } from './../../../utils/categoryRequest';
 import { useNavigate } from 'react-router-dom';
 
 const initialState = {
@@ -25,6 +25,9 @@ const initialState = {
 
 const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
+  const [subOptions, setSubOptions] = useState([]);
+  const [showSub, setShowSub] = useState(false);
+
   const { user } = useSelector((state) => ({ ...state }));
 
   const navigate = useNavigate();
@@ -53,6 +56,15 @@ const ProductCreate = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
+  const handleCategoryChange = (e) => {
+    e.preventDefault();
+    setValues({ ...values, subs: [], category: e.target.value });
+    getCategorySubs(e.target.value).then((res) => {
+      setSubOptions(res.data);
+    });
+    setShowSub(true);
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -62,7 +74,15 @@ const ProductCreate = () => {
         <div className="col-md-10">
           <h4>Product create</h4>
           <hr />
-          <ProductCreateForm handleChange={handleChange} handleSubmit={handleSubmit} values={values} />
+          <ProductCreateForm
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            values={values}
+            handleCategoryChange={handleCategoryChange}
+            subOptions={subOptions}
+            showSub={showSub}
+            setValues={setValues}
+          />
         </div>
       </div>
     </div>
