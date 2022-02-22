@@ -30,16 +30,16 @@ const productSchema = new Schema(
       trim: true,
       maxlength: 32,
     },
-    // category: {
-    //   type: ObjectId,
-    //   ref: 'Category',
-    // },
-    // subs: [
-    //   {
-    //     type: ObjectId,
-    //     ref: 'SubCategory',
-    //   },
-    // ],
+    category: {
+      type: ObjectId,
+      ref: 'Category',
+    },
+    subs: [
+      {
+        type: ObjectId,
+        ref: 'SubCategory',
+      },
+    ],
     quantity: {
       type: Number,
     },

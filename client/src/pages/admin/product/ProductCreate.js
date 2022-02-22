@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import ProductCreateForm from '../../../component/forms/ProductCreateForm';
 import AdminNav from '../../../component/nav/AdminNav';
 import { createProduct } from './../../../utils/productRequest';
+import { getCategories } from './../../../utils/categoryRequest';
+import { useNavigate } from 'react-router-dom';
 
 const initialState = {
   title: '',
@@ -25,17 +27,25 @@ const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
   const { user } = useSelector((state) => ({ ...state }));
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = () => getCategories().then((c) => setValues({ ...values, categories: c.data }));
+
   const handleSubmit = (e) => {
     e.preventDefault();
     createProduct(values, user.token)
       .then((res) => {
         console.log(res);
         toast.success(`New product is created`);
-        // window.location.reload();
+        navigate('/admin/products');
       })
       .catch((err) => {
         console.log(err);
-        // if (err.response.status === 400) toast.error(err.response.data);
+
         toast.error(err.response.data.err);
       });
   };
