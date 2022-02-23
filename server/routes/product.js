@@ -3,9 +3,9 @@ const router = express.Router();
 // middlewares
 const { authCheck, adminCheck } = require('../middlewares/auth');
 // controller
-const { createProduct, readProduct } = require('../controllers/product');
+const { createProduct, listAll } = require('../controllers/product');
 
 router.post('/product', authCheck, adminCheck, createProduct);
-router.get('/products', readProduct);
+router.get('/products/:count', listAll);
 
 module.exports = router;
