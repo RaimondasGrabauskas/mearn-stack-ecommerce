@@ -48,13 +48,43 @@ const FileUpload = ({ values, setValues, setLoading }) => {
       }
     }
   };
+
+  const handleRemove = (public_id) => {
+    setLoading(true);
+    axios
+      .post(
+        reactAppApi + '/removeimages',
+        { public_id },
+        {
+          headers: {
+            authtoken: user ? user.token : '',
+          },
+        }
+      )
+      .then((res) => {
+        setLoading(false);
+        const { images } = values;
+        let filteredImages = images.filter((item) => item.public_id !== public_id);
+        setValues({ ...values, images: filteredImages });
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
+
   return (
     <>
       <div className="row">
         {values.images &&
           values.images.map((image) => (
-            <Badge key={image.public_id} count="x">
-              <Avatar key={image.public_id} src={image.url} size={100} className="ml-3" shape="square" />
+            <Badge
+              key={image.public_id}
+              count="x"
+              onClick={() => handleRemove(image.public_id)}
+              style={{ cursor: 'pointer' }}
+            >
+              <Avatar src={image.url} size={100} className="ml-3" shape="square" />
             </Badge>
           ))}
       </div>
