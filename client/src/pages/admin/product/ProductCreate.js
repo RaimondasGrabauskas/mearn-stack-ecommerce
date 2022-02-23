@@ -76,7 +76,6 @@ const ProductCreate = () => {
         <div className="col-md-10">
           <h4>Product create</h4>
           <hr />
-          {JSON.stringify(values.images)}
           <div className="p-3">
             <FileUpload values={values} setValues={setValues} setLoading={setLoading} />
           </div>
