@@ -17,6 +17,7 @@ import CategoryUpdate from './pages/admin/category/CategoryUpdate';
 import SubCategoryCreate from './pages/admin/subCategory/SubCategoryCreate';
 import SubCategoryUpdate from './pages/admin/subCategory/SubCategoryUpdate';
 import ProductCreate from './pages/admin/product/ProductCreate';
+import AllProducts from './pages/admin/product/AllProducts';
 
 import UserRoute from './component/routes/UserRoute';
 import AdminRoute from './component/routes/AdminRoute';
@@ -143,6 +144,15 @@ const App = () => {
           element={
             <AdminRoute>
               <ProductCreate />
+            </AdminRoute>
+          }
+        />
+        <Route
+          exact
+          path="/admin/products"
+          element={
+            <AdminRoute>
+              <AllProducts />
             </AdminRoute>
           }
         />
