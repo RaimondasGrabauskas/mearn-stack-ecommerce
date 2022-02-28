@@ -1,18 +1,52 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import ProductCreateForm from '../../../component/forms/ProductCreateForm';
 import AdminNav from '../../../component/nav/AdminNav';
-import { createProduct } from './../../../utils/productRequest';
+import { getProduct } from './../../../utils/productRequest';
 import { getCategories, getCategorySubs } from './../../../utils/categoryRequest';
-import { useNavigate } from 'react-router-dom';
-import FileUpload from '../../../component/forms/FileUpload';
-import { LoadingOutlined } from '@ant-design/icons';
+import { useNavigate, useParams } from 'react-router-dom';
+import ProductUpdateForm from './../../../component/forms/ProductUpdateForm';
+
+const initialState = {
+  title: '',
+  description: '',
+  price: '',
+  category: '',
+  categories: [],
+  subs: [],
+  shipping: '',
+  quantity: '',
+  images: [],
+  colors: ['Black', 'Brown', 'Silver', 'White', 'Blue'],
+  brands: ['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'ASUS'],
+  color: '',
+  brand: '',
+};
 
 const ProductUpdate = () => {
   const { user } = useSelector((state) => ({ ...state }));
+  const [values, setValues] = useState(initialState);
+  const { slug } = useParams();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    loadProduct();
+  }, []);
+
+  const loadProduct = () => {
+    getProduct(slug).then((p) => {
+      setValues({ ...values, ...p.data });
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
 
   return (
     <div className="container-fluid">
@@ -23,6 +57,12 @@ const ProductUpdate = () => {
         <div className="col-md-10">
           <h4>Product update</h4>
           <hr />
+          <ProductUpdateForm
+            values={values}
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
+            setValues={setValues}
+          />
         </div>
       </div>
     </div>
