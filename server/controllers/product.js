@@ -35,3 +35,9 @@ exports.remove = async (req, res) => {
     res.status(400).send('Product delete failed');
   }
 };
+
+exports.read = async (req, res) => {
+  const itemSlug = req.params.slug;
+  const singleProduct = await Product.findOne({ slug: itemSlug }).populate('category').populate('subs').exec();
+  res.json(singleProduct);
+};
