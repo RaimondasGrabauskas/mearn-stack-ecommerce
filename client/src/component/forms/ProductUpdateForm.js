@@ -9,22 +9,10 @@ const ProductUpdateForm = ({
   subOptions,
   showSub,
   setValues,
+  categories,
 }) => {
-  const {
-    title,
-    description,
-    price,
-    category,
-    categories,
-    subs,
-    shipping,
-    quantity,
-    images,
-    colors,
-    brands,
-    color,
-    brand,
-  } = values;
+  const { title, description, price, category, subs, shipping, quantity, images, colors, brands, color, brand } =
+    values;
 
   return (
     <form onSubmit={handleSubmit}>
@@ -85,6 +73,20 @@ const ProductUpdateForm = ({
           ))}
         </select>
       </div>
+
+      <div className="form-group">
+        <label>Category</label>
+        <select className="form-control" name="category" onChange={handleCategoryChange}>
+          <option>{category ? category.name : '--'}</option>
+          {categories.length > 0 &&
+            categories.map((c) => (
+              <option key={c._id} value={c._id}>
+                {c.name}
+              </option>
+            ))}
+        </select>
+      </div>
+
       <button className="btn btn-outline-info">Save</button>
     </form>
   );

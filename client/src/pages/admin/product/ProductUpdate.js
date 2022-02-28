@@ -12,7 +12,6 @@ const initialState = {
   description: '',
   price: '',
   category: '',
-  categories: [],
   subs: [],
   shipping: '',
   quantity: '',
@@ -26,13 +25,19 @@ const initialState = {
 const ProductUpdate = () => {
   const { user } = useSelector((state) => ({ ...state }));
   const [values, setValues] = useState(initialState);
+  const [categories, setCategories] = useState([]);
   const { slug } = useParams();
+  const [subOptions, setSubOptions] = useState([]);
+  const [showSub, setShowSub] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     loadProduct();
+    loadCategories();
   }, []);
+
+  const loadCategories = () => getCategories().then((c) => setCategories(c.data));
 
   const loadProduct = () => {
     getProduct(slug).then((p) => {
@@ -46,6 +51,14 @@ const ProductUpdate = () => {
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
+  const handleCategoryChange = (e) => {
+    e.preventDefault();
+    setValues({ ...values, subs: [], category: e.target.value });
+    getCategorySubs(e.target.value).then((res) => {
+      setSubOptions(res.data);
+    });
   };
 
   return (
@@ -62,6 +75,9 @@ const ProductUpdate = () => {
             handleSubmit={handleSubmit}
             handleChange={handleChange}
             setValues={setValues}
+            handleCategoryChange={handleCategoryChange}
+            subOptions={subOptions}
+            categories={categories}
           />
         </div>
       </div>
