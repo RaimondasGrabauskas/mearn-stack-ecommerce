@@ -41,3 +41,20 @@ exports.read = async (req, res) => {
   const singleProduct = await Product.findOne({ slug: itemSlug }).populate('category').populate('subs').exec();
   res.json(singleProduct);
 };
+
+exports.update = async (req, res) => {
+  let itemSlug = req.params.slug;
+  let deteailsOnUpdate = req.body;
+  let { title } = req.body;
+
+  try {
+    if (title) {
+      req.body.slug = slugify(title);
+    }
+    const updated = await Product.findOneAndUpdate({ slug: itemSlug }, deteailsOnUpdate, { new: true }).exec();
+    res.json(updated);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send('Product update failed');
+  }
+};

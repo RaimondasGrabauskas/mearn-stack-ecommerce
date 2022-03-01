@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import AdminNav from '../../../component/nav/AdminNav';
-import { getProduct } from './../../../utils/productRequest';
+import { getProduct, updateProduct } from './../../../utils/productRequest';
 import { getCategories, getCategorySubs } from './../../../utils/categoryRequest';
 import { useNavigate, useParams } from 'react-router-dom';
 import ProductUpdateForm from './../../../component/forms/ProductUpdateForm';
+import FileUpload from './../../../component/forms/FileUpload';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const initialState = {
   title: '',
@@ -17,7 +19,7 @@ const initialState = {
   quantity: '',
   images: [],
   colors: ['Black', 'Brown', 'Silver', 'White', 'Blue'],
-  brands: ['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'ASUS'],
+  brands: ['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'ASUS', 'MSI'],
   color: '',
   brand: '',
 };
@@ -28,7 +30,10 @@ const ProductUpdate = () => {
   const [categories, setCategories] = useState([]);
   const { slug } = useParams();
   const [subOptions, setSubOptions] = useState([]);
-  const [showSub, setShowSub] = useState(false);
+  const [arrayOfSubIds, setArrayOfSubIds] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -42,11 +47,31 @@ const ProductUpdate = () => {
   const loadProduct = () => {
     getProduct(slug).then((p) => {
       setValues({ ...values, ...p.data });
+      getCategorySubs(p.data.category._id).then((res) => {
+        setSubOptions(res.data);
+      });
+      let arr = [];
+      p.data.subs.map((s) => arr.push(s._id));
+
+      setArrayOfSubIds((prev) => arr);
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
+    values.subs = arrayOfSubIds;
+    values.category = selectedCategory ? selectedCategory : values.category;
+
+    updateProduct(slug, values, user.token)
+      .then((res) => {
+        setLoading(false);
+        toast.success(`Product is updated`);
+        navigate('/admin/products');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleChange = (e) => {
@@ -55,10 +80,17 @@ const ProductUpdate = () => {
 
   const handleCategoryChange = (e) => {
     e.preventDefault();
-    setValues({ ...values, subs: [], category: e.target.value });
+    setValues({ ...values, subs: [] });
+
+    setSelectedCategory(e.target.value);
+
     getCategorySubs(e.target.value).then((res) => {
       setSubOptions(res.data);
     });
+    if (values.category._id === e.target.value) {
+      loadProduct();
+    }
+    setArrayOfSubIds([]);
   };
 
   return (
@@ -68,8 +100,13 @@ const ProductUpdate = () => {
           <AdminNav />
         </div>
         <div className="col-md-10">
-          <h4>Product update</h4>
+          {loading ? <LoadingOutlined className="text-danger h1" /> : <h4>Product create</h4>}
           <hr />
+
+          <div className="p-3">
+            <FileUpload values={values} setValues={setValues} setLoading={setLoading} />
+          </div>
+
           <ProductUpdateForm
             values={values}
             handleSubmit={handleSubmit}
@@ -78,6 +115,9 @@ const ProductUpdate = () => {
             handleCategoryChange={handleCategoryChange}
             subOptions={subOptions}
             categories={categories}
+            arrayOfSubIds={arrayOfSubIds}
+            setArrayOfSubIds={setArrayOfSubIds}
+            selectedCategory={selectedCategory}
           />
         </div>
       </div>
