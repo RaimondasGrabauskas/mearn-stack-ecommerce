@@ -34,3 +34,5 @@ export const updateProduct = async (slug, updateDeteils, authtoken) => {
     },
   });
 };
+
+export const getProducts = async (sort, order, limit) => await axios.post(productListUrl, { sort, order, limit });
