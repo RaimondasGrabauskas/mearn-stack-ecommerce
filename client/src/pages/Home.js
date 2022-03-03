@@ -1,4 +1,5 @@
 import Jumbotron from '../component/cards/Jumbotron';
+import BestSellers from '../component/home/BestSellers';
 import NewArrivals from '../component/home/NewArrivals';
 
 const Home = () => {
@@ -11,6 +12,10 @@ const Home = () => {
       <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">New Arrivals</h4>
 
       <NewArrivals />
+
+      <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">Best Sellers</h4>
+
+      <BestSellers />
     </>
   );
 };
