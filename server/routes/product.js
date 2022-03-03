@@ -3,9 +3,10 @@ const router = express.Router();
 // middlewares
 const { authCheck, adminCheck } = require('../middlewares/auth');
 // controller
-const { createProduct, listAll, remove, read, update, list } = require('../controllers/product');
+const { createProduct, listAll, remove, read, update, list, productsCount } = require('../controllers/product');
 
 router.post('/product', authCheck, adminCheck, createProduct);
+router.get('/products/total', productsCount);
 router.get('/products/:count', listAll);
 router.delete('/delete/product/:slug', authCheck, adminCheck, remove);
 router.get('/product/:slug', read);
