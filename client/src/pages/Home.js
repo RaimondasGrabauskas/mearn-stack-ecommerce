@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Jumbotron from '../component/cards/Jumbotron';
 import ProductCard from '../component/cards/ProductCard';
 import { getProductsByCount } from '../utils/productRequest';
 
@@ -25,7 +26,9 @@ const Home = () => {
 
   return (
     <>
-      <div className="jumbotron">{loading ? <h4>Loading...</h4> : <h4>All Products</h4>}</div>
+      <div className="jumbotron text-danger h1 font-weight-bold text-center">
+        <Jumbotron text={['Latest Products', 'New Arrivals', 'Best Sellers']} />
+      </div>
 
       <div className="container">
         <div className="row">

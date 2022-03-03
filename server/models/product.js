@@ -60,7 +60,7 @@ const productSchema = new Schema(
     },
     brand: {
       type: String,
-      enum: ['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'ASUS'],
+      enum: ['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'ASUS', 'HP'],
     },
     // ratings: [
     //   {
