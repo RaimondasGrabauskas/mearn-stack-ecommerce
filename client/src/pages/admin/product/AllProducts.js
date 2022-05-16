@@ -16,7 +16,7 @@ const AllProducts = () => {
 
   const loadAllProducts = () => {
     setLoading(true);
-    getProductsByCount(5)
+    getProductsByCount(7)
       .then((res) => {
         setProducts(res.data);
         setLoading(false);

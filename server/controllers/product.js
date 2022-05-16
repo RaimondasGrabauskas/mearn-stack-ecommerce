@@ -59,15 +59,36 @@ exports.update = async (req, res) => {
   }
 };
 
+// without pagination
+// exports.list = async (req, res) => {
+//   const { sort, order, limit } = req.body;
+//   try {
+//     const products = await Product.find({})
+//       .populate('category')
+//       .populate('subs')
+//       .sort([[sort, order]])
+//       .limit(limit)
+//       .exec();
+//     res.json(products);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+// with pagination
 exports.list = async (req, res) => {
-  const { sort, order, limit } = req.body;
+  const { sort, order, page } = req.body;
+  const currentPage = page || 1;
+  const perPage = 3;
   try {
     const products = await Product.find({})
+      .skip((currentPage - 1) * perPage)
       .populate('category')
       .populate('subs')
       .sort([[sort, order]])
-      .limit(limit)
+      .limit(perPage)
       .exec();
+
     res.json(products);
   } catch (err) {
     console.log(err);

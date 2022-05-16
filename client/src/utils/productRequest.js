@@ -6,6 +6,7 @@ const productListUrl = url + '/products';
 const removeProductUrl = url + '/delete/product/';
 const getSingleProduct = url + '/product/';
 const updateProductUrl = url + '/update/product/';
+const productsCountUrl = url + '/products/total';
 
 export const createProduct = async (productDetails, authtoken) => {
   await axios.post(productCreateUrl, productDetails, {
@@ -35,4 +36,11 @@ export const updateProduct = async (slug, updateDeteils, authtoken) => {
   });
 };
 
-export const getProducts = async (sort, order, limit) => await axios.post(productListUrl, { sort, order, limit });
+export const getProducts = async (sort, order, page) =>
+  await axios.post(productListUrl, {
+    sort,
+    order,
+    page,
+  });
+
+export const getProductsCount = async () => await axios.get(productsCountUrl);
