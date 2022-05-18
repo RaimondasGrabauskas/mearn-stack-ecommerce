@@ -13,6 +13,10 @@ const NewArrivals = () => {
 
   useEffect(() => {
     loadAllProducts();
+
+    return () => {
+      setProducts([]);
+    };
   }, [page]);
 
   useEffect(() => {

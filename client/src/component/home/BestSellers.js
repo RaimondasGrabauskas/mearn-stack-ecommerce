@@ -13,10 +13,20 @@ const BestSellers = () => {
 
   useEffect(() => {
     loadAllProducts();
+    return () => {
+      setProducts([]);
+    };
   }, [page]);
 
   useEffect(() => {
-    getProductsCount().then((res) => setProductsCount(res.data));
+    let unmounted = false;
+
+    if (!unmounted) {
+      getProductsCount().then((res) => setProductsCount(res.data));
+    }
+    return () => {
+      unmounted = true;
+    };
   }, []);
 
   const loadAllProducts = () => {
