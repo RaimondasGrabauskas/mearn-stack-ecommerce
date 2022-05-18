@@ -62,12 +62,12 @@ const productSchema = new Schema(
       type: String,
       enum: ['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'ASUS', 'HP', 'MSI'],
     },
-    // ratings: [
-    //   {
-    //     star: Number,
-    //     postedBy: { type: ObjectId, ref: 'user' },
-    //   },
-    // ],
+    ratings: [
+      {
+        star: Number,
+        postedBy: { type: ObjectId, ref: 'user' },
+      },
+    ],
   },
   { timestamps: true }
 );
