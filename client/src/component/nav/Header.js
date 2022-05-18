@@ -6,7 +6,7 @@ import { auth } from './../../firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const { SubMenu, Item } = Menu; // Menu.SubMenu
+const { SubMenu, Item } = Menu;
 
 const Header = () => {
   const [current, setCurrent] = useState('home');

@@ -2,7 +2,6 @@ const User = require('../models/user');
 
 exports.createOrUpdateUser = async (req, res) => {
   const { picture, email } = req.user;
-  console.log('req body', req.user);
 
   const updateDetails = {
     name: email.split('@')[0],
