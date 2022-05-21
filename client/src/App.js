@@ -20,6 +20,7 @@ import ProductCreate from './pages/admin/product/ProductCreate';
 import AllProducts from './pages/admin/product/AllProducts';
 import ProductUpdate from './pages/admin/product/ProductUpdate';
 import Product from './pages/Product';
+import History from './pages/user/History';
 
 import UserRoute from './component/routes/UserRoute';
 import AdminRoute from './component/routes/AdminRoute';
@@ -27,11 +28,9 @@ import AdminRoute from './component/routes/AdminRoute';
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
 import { currentUser } from './utils/request';
-import History from './pages/user/History';
 
 const App = () => {
   const dispatch = useDispatch();
-
   useEffect(() => {
     const unSubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {

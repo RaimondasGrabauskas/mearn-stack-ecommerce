@@ -19,14 +19,7 @@ const BestSellers = () => {
   }, [page]);
 
   useEffect(() => {
-    let unmounted = false;
-
-    if (!unmounted) {
-      getProductsCount().then((res) => setProductsCount(res.data));
-    }
-    return () => {
-      unmounted = true;
-    };
+    getProductsCount().then((res) => setProductsCount(res.data));
   }, []);
 
   const loadAllProducts = () => {
