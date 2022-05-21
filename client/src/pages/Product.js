@@ -1,12 +1,14 @@
 import { getProduct, productStar } from '../utils/productRequest';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import ProductCard from './../component/cards/ProductCard';
 import SingleProduct from './../component/cards/SingleProduct';
-
+import { getRelatedProduct } from './../utils/productRequest';
 import { useSelector } from 'react-redux';
 
 const Product = () => {
   const [product, setProduct] = useState([]);
+  const [relatedProduct, setRelatedProduct] = useState([]);
   const [star, setStar] = useState(0);
   const { slug } = useParams();
   const { user } = useSelector((state) => ({ ...state }));
@@ -23,7 +25,14 @@ const Product = () => {
     }
   }, [user]);
 
-  const loadSingleProduct = () => getProduct(slug).then((res) => setProduct(res.data));
+  const loadSingleProduct = () => {
+    getProduct(slug).then((res) => {
+      setProduct(res.data);
+      getRelatedProduct(res.data._id).then((res) => {
+        setRelatedProduct(res.data);
+      });
+    });
+  };
 
   const onStarClick = (newRating, name) => {
     setStar(newRating);
@@ -43,7 +52,19 @@ const Product = () => {
           <hr />
           <h4>Related Products</h4>
           <hr />
+          {}
         </div>
+      </div>
+      <div className="row pb-5">
+        {relatedProduct.length ? (
+          relatedProduct.map((r) => (
+            <div className="col-md-4" key={r._id}>
+              <ProductCard product={r} />
+            </div>
+          ))
+        ) : (
+          <div className="text-center col">No products found</div>
+        )}
       </div>
     </div>
   );

@@ -15,6 +15,7 @@ const Login = () => {
 
   const { user } = useSelector((state) => ({ ...state }));
   const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -108,7 +109,7 @@ const Login = () => {
               className="form-control"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Yourpassword"
+              placeholder="Your password"
             />
           </div>
           <Button

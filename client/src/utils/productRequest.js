@@ -7,6 +7,8 @@ const removeProductUrl = url + '/delete/product/';
 const getSingleProduct = url + '/product/';
 const updateProductUrl = url + '/update/product/';
 const productsCountUrl = url + '/products/total';
+const productStarUrl = url + '/product/star/';
+const relatedProduct = url + '/product/related/';
 
 export const createProduct = async (productDetails, authtoken) => {
   await axios.post(productCreateUrl, productDetails, {
@@ -44,3 +46,17 @@ export const getProducts = async (sort, order, page) =>
   });
 
 export const getProductsCount = async () => await axios.get(productsCountUrl);
+
+export const productStar = async (productId, star, authToken) => {
+  await axios.put(
+    productStarUrl + productId,
+    { star: star },
+    {
+      headers: {
+        authToken,
+      },
+    }
+  );
+};
+
+export const getRelatedProduct = async (productId) => await axios.get(relatedProduct + productId);
