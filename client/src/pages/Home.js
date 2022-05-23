@@ -1,4 +1,5 @@
 import Jumbotron from '../component/cards/Jumbotron';
+import CategoryList from '../component/category/CategoryList';
 import BestSellers from '../component/home/BestSellers';
 import NewArrivals from '../component/home/NewArrivals';
 
@@ -16,6 +17,11 @@ const Home = () => {
       <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">Best Sellers</h4>
 
       <BestSellers />
+
+      <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">Categories</h4>
+
+      <CategoryList />
+      <br />
     </>
   );
 };

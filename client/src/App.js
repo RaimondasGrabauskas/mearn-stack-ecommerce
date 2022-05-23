@@ -21,6 +21,7 @@ import AllProducts from './pages/admin/product/AllProducts';
 import ProductUpdate from './pages/admin/product/ProductUpdate';
 import Product from './pages/Product';
 import History from './pages/user/History';
+import CategoryHome from './pages/category/CategoryHome';
 
 import UserRoute from './component/routes/UserRoute';
 import AdminRoute from './component/routes/AdminRoute';
@@ -167,6 +168,7 @@ const App = () => {
           }
         />
         <Route exact path="/product/:slug" element={<Product />} />
+        <Route exact path="/category/:slug" element={<CategoryHome />} />
       </Routes>
     </>
   );
