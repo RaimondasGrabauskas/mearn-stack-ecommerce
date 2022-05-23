@@ -22,6 +22,7 @@ import ProductUpdate from './pages/admin/product/ProductUpdate';
 import Product from './pages/Product';
 import History from './pages/user/History';
 import CategoryHome from './pages/category/CategoryHome';
+import SubHome from './pages/sub/SubHome';
 
 import UserRoute from './component/routes/UserRoute';
 import AdminRoute from './component/routes/AdminRoute';
@@ -169,6 +170,7 @@ const App = () => {
         />
         <Route exact path="/product/:slug" element={<Product />} />
         <Route exact path="/category/:slug" element={<CategoryHome />} />
+        <Route exact path="/sub/:slug" element={<SubHome />} />
       </Routes>
     </>
   );

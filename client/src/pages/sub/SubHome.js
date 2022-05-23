@@ -1,19 +1,19 @@
-import { getSingleCategory } from '../../utils/categoryRequest';
+import { getSingleSubCategory } from '../../utils/subCategoryRequest';
 import ProductCard from './../../component/cards/ProductCard';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-const CategoryHome = () => {
+const SubHome = () => {
   const { slug } = useParams();
-  const [category, setCategory] = useState({});
+  const [sub, setSub] = useState({});
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    getSingleCategory(slug).then((c) => {
-      setCategory(c.data.category);
-      setProducts(c.data.products);
+    getSingleSubCategory(slug).then((s) => {
+      setSub(s.data.subCategory);
+      setProducts(s.data.products);
       setLoading(false);
     });
   }, [slug]);
@@ -26,7 +26,7 @@ const CategoryHome = () => {
             <h4 className="text-center p-3 mt-5 mb-4 display-4 jumbotron">Loading...</h4>
           ) : (
             <h4 className="text-center p-3 mt-5 mb-4 display-4 jumbotron">
-              {products.length} Products in "{category.name}" category
+              {products.length} Products in "{sub.name}" Sub
             </h4>
           )}
         </div>
@@ -43,4 +43,4 @@ const CategoryHome = () => {
   );
 };
 
-export default CategoryHome;
+export default SubHome;
