@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
 import { Menu } from 'antd';
-import { AppstoreOutlined, SettingOutlined, UserOutlined, UserAddOutlined, LogoutOutlined } from '@ant-design/icons';
+import {
+  AppstoreOutlined,
+  SettingOutlined,
+  UserOutlined,
+  UserAddOutlined,
+  LogoutOutlined,
+  ShoppingOutlined,
+} from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { auth } from './../../firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Search from '../forms/Search';
 
 const { SubMenu, Item } = Menu;
 
@@ -33,13 +41,16 @@ const Header = () => {
         <Link to="/">Home</Link>
       </Item>
 
+      <Item key="shop" icon={<ShoppingOutlined />}>
+        <Link to="/shop">Shop</Link>
+      </Item>
+
+      <Item key="search" className="ml-auto">
+        <Search />
+      </Item>
+
       {user && (
-        <SubMenu
-          key="SubMenu"
-          icon={<SettingOutlined />}
-          title={user.email && user.email.split('@')[0]}
-          className="ml-auto"
-        >
+        <SubMenu key="SubMenu" icon={<SettingOutlined />} title={user.email && user.email.split('@')[0]}>
           {user && user.role === 'subscriber' && (
             <Item key="setting:1">
               <Link to="/user/history">Dashboard</Link>
@@ -57,7 +68,7 @@ const Header = () => {
       )}
 
       {!user && (
-        <Item key="login" icon={<UserOutlined />} className="ml-auto">
+        <Item key="login" icon={<UserOutlined />}>
           <Link to="/login">Login</Link>
         </Item>
       )}

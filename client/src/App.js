@@ -23,6 +23,7 @@ import Product from './pages/Product';
 import History from './pages/user/History';
 import CategoryHome from './pages/category/CategoryHome';
 import SubHome from './pages/sub/SubHome';
+import Shop from './pages/Shop';
 
 import UserRoute from './component/routes/UserRoute';
 import AdminRoute from './component/routes/AdminRoute';
@@ -171,6 +172,7 @@ const App = () => {
         <Route exact path="/product/:slug" element={<Product />} />
         <Route exact path="/category/:slug" element={<CategoryHome />} />
         <Route exact path="/sub/:slug" element={<SubHome />} />
+        <Route exact path="/shop" element={<Shop />} />
       </Routes>
     </>
   );
