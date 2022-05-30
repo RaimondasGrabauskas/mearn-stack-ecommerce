@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { SearchOutlined } from '@ant-design/icons';
@@ -29,6 +28,7 @@ const Search = () => {
         onChange={handleChange}
         className="form-control mr-sm-2 mt-1"
         placeholder="Search"
+        style={{ border: 'none' }}
       />
       <SearchOutlined onClick={handleSubmit} style={{ cursor: 'pointer' }} />
     </form>

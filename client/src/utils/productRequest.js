@@ -9,6 +9,7 @@ const updateProductUrl = url + '/update/product/';
 const productsCountUrl = url + '/products/total';
 const productStarUrl = url + '/product/star/';
 const relatedProduct = url + '/product/related/';
+const searchProduct = url + '/search/filters';
 
 export const createProduct = async (productDetails, authtoken) => {
   await axios.post(productCreateUrl, productDetails, {
@@ -60,3 +61,5 @@ export const productStar = async (productId, star, authToken) => {
 };
 
 export const getRelatedProduct = async (productId) => await axios.get(relatedProduct + productId);
+
+export const fetchProductsByFilter = async (arg) => await axios.post(searchProduct, arg);
