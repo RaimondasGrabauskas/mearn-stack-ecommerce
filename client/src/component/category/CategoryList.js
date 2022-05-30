@@ -12,6 +12,9 @@ const CategoryList = () => {
       setCategories(c.data);
       setLoading(false);
     });
+    return () => {
+      setCategories([]);
+    };
   }, []);
 
   const showCategories = () =>
