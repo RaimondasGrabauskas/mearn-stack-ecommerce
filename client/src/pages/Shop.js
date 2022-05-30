@@ -68,6 +68,7 @@ const Shop = () => {
     });
 
     setCategoryIds([]);
+    setStar('');
     setPrice(value);
     setTimeout(() => {
       setOk(!ok);
@@ -96,6 +97,7 @@ const Shop = () => {
     });
 
     setPrice([0, 0]);
+    setStar('');
 
     let inTheState = [...categoryIds];
     let justChecked = e.target.value;
@@ -110,9 +112,27 @@ const Shop = () => {
     fetchProducts({ category: inTheState });
   };
 
-  const handleStarClick = (number) => {};
+  const handleStarClick = (number) => {
+    dispatch({
+      type: 'SEARCH_QUERY',
+      payload: { text: '' },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar(number);
 
-  const showStars = () => <Star starClick={handleStarClick} numberOfStars={5} />;
+    fetchProducts({ stars: number });
+  };
+
+  const showStars = () => (
+    <div style={{ paddingLeft: 20 }}>
+      <Star starClick={handleStarClick} numberOfStars={5} />
+      <Star starClick={handleStarClick} numberOfStars={4} />
+      <Star starClick={handleStarClick} numberOfStars={3} />
+      <Star starClick={handleStarClick} numberOfStars={2} />
+      <Star starClick={handleStarClick} numberOfStars={1} />
+    </div>
+  );
 
   return (
     <div className="container-fluid">

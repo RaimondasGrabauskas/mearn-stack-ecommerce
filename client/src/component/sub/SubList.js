@@ -12,6 +12,10 @@ const SubList = () => {
       setSubs(c.data);
       setLoading(false);
     });
+
+    return () => {
+      setSubs([]);
+    };
   }, []);
 
   const showSubs = () =>
