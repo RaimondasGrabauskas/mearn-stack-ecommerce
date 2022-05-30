@@ -1,8 +1,9 @@
 import { fetchProductsByFilter, getProductsByCount } from './../utils/productRequest';
 import { useDispatch, useSelector } from 'react-redux';
 import ProductCard from './../component/cards/ProductCard';
+import Star from '../component/forms/Star';
 import { useEffect, useState } from 'react';
-import { DollarOutlined, DownSquareOutlined } from '@ant-design/icons';
+import { DollarOutlined, DownSquareOutlined, StarOutlined } from '@ant-design/icons';
 import { Menu, Slider, Checkbox } from 'antd';
 import { getCategories } from './../utils/categoryRequest';
 
@@ -15,6 +16,7 @@ const Shop = () => {
   const [ok, setOk] = useState(false);
   const [categories, setCategories] = useState([]);
   const [categoryIds, setCategoryIds] = useState([]);
+  const [star, setStar] = useState('');
 
   const { search } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
@@ -108,6 +110,10 @@ const Shop = () => {
     fetchProducts({ category: inTheState });
   };
 
+  const handleStarClick = (number) => {};
+
+  const showStars = () => <Star starClick={handleStarClick} numberOfStars={5} />;
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -115,7 +121,7 @@ const Shop = () => {
           <h4>Search/Filter</h4>
           <hr />
 
-          <Menu defaultOpenKeys={['1', '2']} mode="inline">
+          <Menu defaultOpenKeys={['1', '2', '3']} mode="inline">
             <ItemGroup>
               <SubMenu
                 key="1"
@@ -146,6 +152,19 @@ const Shop = () => {
                 }
               >
                 {showCategories()}
+              </SubMenu>
+            </ItemGroup>
+
+            <ItemGroup>
+              <SubMenu
+                key="3"
+                title={
+                  <span>
+                    <StarOutlined className="mr-2" /> Rating
+                  </span>
+                }
+              >
+                {showStars()}
               </SubMenu>
             </ItemGroup>
           </Menu>
