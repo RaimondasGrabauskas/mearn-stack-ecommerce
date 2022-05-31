@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { DollarOutlined, DownSquareOutlined, StarOutlined } from '@ant-design/icons';
 import { Menu, Slider, Checkbox } from 'antd';
 import { getCategories } from './../utils/categoryRequest';
+import { getSubCategories } from '../utils/subCategoryRequest';
 
 const { SubMenu, ItemGroup } = Menu;
 
@@ -17,6 +18,8 @@ const Shop = () => {
   const [categories, setCategories] = useState([]);
   const [categoryIds, setCategoryIds] = useState([]);
   const [star, setStar] = useState('');
+  const [subs, setSubs] = useState([]);
+  const [sub, setSub] = useState('');
 
   const { search } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
@@ -25,6 +28,7 @@ const Shop = () => {
   useEffect(() => {
     loadProducts();
     loadCategories();
+    loadSubs();
   }, []);
 
   // load products by default on page load
@@ -35,6 +39,8 @@ const Shop = () => {
       setLoading(false);
     });
   };
+
+  const loadSubs = () => getSubCategories().then((res) => setSubs(res.data));
 
   // load products on user search input
 
@@ -69,6 +75,7 @@ const Shop = () => {
 
     setCategoryIds([]);
     setStar('');
+    setSub('');
     setPrice(value);
     setTimeout(() => {
       setOk(!ok);
@@ -98,6 +105,7 @@ const Shop = () => {
 
     setPrice([0, 0]);
     setStar('');
+    setSub('');
 
     let inTheState = [...categoryIds];
     let justChecked = e.target.value;
@@ -119,9 +127,23 @@ const Shop = () => {
     });
     setPrice([0, 0]);
     setCategoryIds([]);
+    setSub('');
     setStar(number);
 
     fetchProducts({ stars: number });
+  };
+
+  const handleSub = (sub) => {
+    setSub(sub);
+    dispatch({
+      type: 'SEARCH_QUERY',
+      payload: { text: '' },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar('');
+
+    fetchProducts({ sub });
   };
 
   const showStars = () => (
@@ -134,6 +156,17 @@ const Shop = () => {
     </div>
   );
 
+  const showSubs = () =>
+    subs.map((s) => (
+      <div
+        key={s._id}
+        onClick={() => handleSub(s)}
+        className="p-1 m-1 badge badge-secondary"
+        style={{ cursor: 'pointer' }}
+      >
+        {s.name}
+      </div>
+    ));
   return (
     <div className="container-fluid">
       <div className="row">
@@ -141,7 +174,7 @@ const Shop = () => {
           <h4>Search/Filter</h4>
           <hr />
 
-          <Menu defaultOpenKeys={['1', '2', '3']} mode="inline">
+          <Menu defaultOpenKeys={['1', '2', '3', '4']} mode="inline">
             <ItemGroup>
               <SubMenu
                 key="1"
@@ -185,6 +218,21 @@ const Shop = () => {
                 }
               >
                 {showStars()}
+              </SubMenu>
+            </ItemGroup>
+
+            <ItemGroup>
+              <SubMenu
+                key="4"
+                title={
+                  <span>
+                    <DownSquareOutlined className="mr-2" /> Sub Categories
+                  </span>
+                }
+              >
+                <div style={{ marginTop: '-10px' }} className="pl-4 pr-4">
+                  {showSubs()}
+                </div>
               </SubMenu>
             </ItemGroup>
           </Menu>
