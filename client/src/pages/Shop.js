@@ -20,7 +20,7 @@ const Shop = () => {
   const [star, setStar] = useState('');
   const [subs, setSubs] = useState([]);
   const [sub, setSub] = useState('');
-  const [shipping, setSuhipping] = useState(['Yes', 'No']);
+  const [shipping, setShipping] = useState('');
   const [brands, setBrands] = useState(['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'ASUS', 'HP', 'MSI']);
   const [brand, setBrand] = useState('');
   const [colors, setColors] = useState(['Black', 'Brown', 'Silver', 'White', 'Blue']);
@@ -83,6 +83,7 @@ const Shop = () => {
     setSub('');
     setBrand('');
     setColor('');
+    setShipping('');
     setPrice(value);
     setTimeout(() => {
       setOk(!ok);
@@ -115,6 +116,7 @@ const Shop = () => {
     setSub('');
     setBrand('');
     setColor('');
+    setShipping('');
 
     let inTheState = [...categoryIds];
     let justChecked = e.target.value;
@@ -140,7 +142,7 @@ const Shop = () => {
     setBrand('');
     setColor('');
     setStar(number);
-
+    setShipping('');
     fetchProducts({ stars: number });
   };
 
@@ -155,7 +157,7 @@ const Shop = () => {
     setStar('');
     setBrand('');
     setColor('');
-
+    setShipping('');
     fetchProducts({ sub });
   };
 
@@ -191,6 +193,7 @@ const Shop = () => {
     setStar('');
     setSub('');
     setColor('');
+    setShipping('');
     setBrand(e.target.value);
     fetchProducts({ brand: e.target.value });
   };
@@ -219,6 +222,7 @@ const Shop = () => {
     setStar('');
     setSub('');
     setBrand('');
+    setShipping('');
     setColor(e.target.value);
     fetchProducts({ color: e.target.value });
   };
@@ -236,6 +240,30 @@ const Shop = () => {
         {c}
       </Radio>
     ));
+
+  const handleShippingChange = (e) => {
+    dispatch({
+      type: 'SEARCH_QUERY',
+      payload: { text: '' },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar('');
+    setSub('');
+    setBrand('');
+    setColor('');
+
+    setShipping(e.target.value);
+    fetchProducts({ shipping: e.target.value });
+  };
+
+  const showShipping = () => (
+    <>
+      <Checkbox className="pb-2 pl-4 pr-4" onChange={handleShippingChange} value="Yes" checked={shipping === 'Yes'} />{' '}
+      Yes
+      <Checkbox className="pb-2 pl-4 pr-4" onChange={handleShippingChange} value="No" checked={shipping === 'No'} /> No
+    </>
+  );
 
   return (
     <div className="container-fluid">
@@ -332,6 +360,21 @@ const Shop = () => {
               >
                 <div style={{ marginTop: '-10px' }} className="pl-4 pt-2 pr-4">
                   {showColors()}
+                </div>
+              </SubMenu>
+            </ItemGroup>
+
+            <ItemGroup>
+              <SubMenu
+                key="7"
+                title={
+                  <span className="h6">
+                    <DownSquareOutlined className="mr-2" /> Shipping
+                  </span>
+                }
+              >
+                <div style={{ marginTop: '-10px' }} className="pl-4 pt-2 pr-4">
+                  {showShipping()}
                 </div>
               </SubMenu>
             </ItemGroup>
