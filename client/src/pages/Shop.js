@@ -4,7 +4,7 @@ import ProductCard from './../component/cards/ProductCard';
 import Star from '../component/forms/Star';
 import { useEffect, useState } from 'react';
 import { DollarOutlined, DownSquareOutlined, StarOutlined } from '@ant-design/icons';
-import { Menu, Slider, Checkbox } from 'antd';
+import { Menu, Slider, Checkbox, Radio } from 'antd';
 import { getCategories } from './../utils/categoryRequest';
 import { getSubCategories } from '../utils/subCategoryRequest';
 
@@ -20,6 +20,11 @@ const Shop = () => {
   const [star, setStar] = useState('');
   const [subs, setSubs] = useState([]);
   const [sub, setSub] = useState('');
+  const [shipping, setSuhipping] = useState(['Yes', 'No']);
+  const [brands, setBrands] = useState(['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'ASUS', 'HP', 'MSI']);
+  const [brand, setBrand] = useState('');
+  const [colors, setColors] = useState(['Black', 'Brown', 'Silver', 'White', 'Blue']);
+  const [color, setColor] = useState('');
 
   const { search } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
@@ -76,6 +81,8 @@ const Shop = () => {
     setCategoryIds([]);
     setStar('');
     setSub('');
+    setBrand('');
+    setColor('');
     setPrice(value);
     setTimeout(() => {
       setOk(!ok);
@@ -106,6 +113,8 @@ const Shop = () => {
     setPrice([0, 0]);
     setStar('');
     setSub('');
+    setBrand('');
+    setColor('');
 
     let inTheState = [...categoryIds];
     let justChecked = e.target.value;
@@ -128,6 +137,8 @@ const Shop = () => {
     setPrice([0, 0]);
     setCategoryIds([]);
     setSub('');
+    setBrand('');
+    setColor('');
     setStar(number);
 
     fetchProducts({ stars: number });
@@ -142,6 +153,8 @@ const Shop = () => {
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar('');
+    setBrand('');
+    setColor('');
 
     fetchProducts({ sub });
   };
@@ -167,6 +180,63 @@ const Shop = () => {
         {s.name}
       </div>
     ));
+
+  const handleBrand = (e) => {
+    dispatch({
+      type: 'SEARCH_QUERY',
+      payload: { text: '' },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar('');
+    setSub('');
+    setColor('');
+    setBrand(e.target.value);
+    fetchProducts({ brand: e.target.value });
+  };
+
+  const showBrands = () =>
+    brands.map((b) => (
+      <Radio
+        style={{ display: 'flex' }}
+        key={b}
+        value={b}
+        checked={b === brand}
+        onChange={handleBrand}
+        className="pb-1 pr-4"
+      >
+        {b}
+      </Radio>
+    ));
+
+  const handleColor = (e) => {
+    dispatch({
+      type: 'SEARCH_QUERY',
+      payload: { text: '' },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar('');
+    setSub('');
+    setBrand('');
+    setColor(e.target.value);
+    fetchProducts({ color: e.target.value });
+  };
+
+  const showColors = () =>
+    colors.map((c) => (
+      <Radio
+        style={{ display: 'flex' }}
+        key={c}
+        value={c}
+        checked={c === color}
+        onChange={handleColor}
+        className="pb-1 pr-4"
+      >
+        {c}
+      </Radio>
+    ));
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -174,12 +244,12 @@ const Shop = () => {
           <h4>Search/Filter</h4>
           <hr />
 
-          <Menu defaultOpenKeys={['1', '2', '3', '4']} mode="inline">
+          <Menu defaultOpenKeys={['1', '2', '3', '4', '5', '6', '7']} mode="inline">
             <ItemGroup>
               <SubMenu
                 key="1"
                 title={
-                  <span>
+                  <span className="h6">
                     <DollarOutlined className="mr-2" /> Price
                   </span>
                 }
@@ -199,7 +269,7 @@ const Shop = () => {
               <SubMenu
                 key="2"
                 title={
-                  <span>
+                  <span className="h6">
                     <DownSquareOutlined className="mr-2" /> Categories
                   </span>
                 }
@@ -212,7 +282,7 @@ const Shop = () => {
               <SubMenu
                 key="3"
                 title={
-                  <span>
+                  <span className="h6">
                     <StarOutlined className="mr-2" /> Rating
                   </span>
                 }
@@ -225,13 +295,43 @@ const Shop = () => {
               <SubMenu
                 key="4"
                 title={
-                  <span>
+                  <span className="h6">
                     <DownSquareOutlined className="mr-2" /> Sub Categories
                   </span>
                 }
               >
                 <div style={{ marginTop: '-10px' }} className="pl-4 pr-4">
                   {showSubs()}
+                </div>
+              </SubMenu>
+            </ItemGroup>
+
+            <ItemGroup>
+              <SubMenu
+                key="5"
+                title={
+                  <span className="h6">
+                    <DownSquareOutlined className="mr-2" /> Brands
+                  </span>
+                }
+              >
+                <div style={{ marginTop: '-10px' }} className="pl-4 pt-2 pr-4">
+                  {showBrands()}
+                </div>
+              </SubMenu>
+            </ItemGroup>
+
+            <ItemGroup>
+              <SubMenu
+                key="6"
+                title={
+                  <span className="h6">
+                    <DownSquareOutlined className="mr-2" /> Colors
+                  </span>
+                }
+              >
+                <div style={{ marginTop: '-10px' }} className="pl-4 pt-2 pr-4">
+                  {showColors()}
                 </div>
               </SubMenu>
             </ItemGroup>
