@@ -1,8 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { userCart } from '../utils/user';
 import ProductCardInCheckout from './../component/cards/ProductCardInCheckout';
 
 const Cart = () => {
+  const navigate = useNavigate();
   const { cart, user } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
 
@@ -12,7 +14,15 @@ const Cart = () => {
     }, 0);
   };
 
-  const saveOrderOnDb = () => {};
+  const saveOrderToDb = () => {
+    // console.log('cart', JSON.stringify(cart));
+    userCart(cart, user.token)
+      .then((res) => {
+        console.log('Cart post res', res);
+        if (res.data.ok) navigate('/checkout');
+      })
+      .catch((err) => console.log('cart save err', err));
+  };
 
   const showCartItems = () => (
     <table className="table table-bordered">
@@ -65,7 +75,7 @@ const Cart = () => {
           </p>
           <hr />
           {user ? (
-            <button onClick={saveOrderOnDb} disabled={!cart.length} className="btn btn-sm btn-primary mt-2">
+            <button onClick={saveOrderToDb} disabled={!cart.length} className="btn btn-sm btn-primary mt-2">
               Proceed to Checkout
             </button>
           ) : (

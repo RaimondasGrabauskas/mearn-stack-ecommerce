@@ -26,6 +26,7 @@ import SubHome from './pages/sub/SubHome';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
 import SideDrawer from './component/drawer/SideDrawer';
+import Checkout from './pages/Checkout';
 
 import UserRoute from './component/routes/UserRoute';
 import AdminRoute from './component/routes/AdminRoute';
@@ -177,6 +178,16 @@ const App = () => {
         <Route exact path="/sub/:slug" element={<SubHome />} />
         <Route exact path="/shop" element={<Shop />} />
         <Route exact path="/cart" element={<Cart />} />
+
+        <Route
+          exact
+          path="/checkout"
+          element={
+            <UserRoute>
+              <Checkout />
+            </UserRoute>
+          }
+        />
       </Routes>
     </>
   );
