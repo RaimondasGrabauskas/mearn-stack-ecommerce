@@ -27,7 +27,7 @@ const Checkout = () => {
         <br />
         textarea
         <button className="btn btn-primary mt-2" onClick={saveAddressToDb}>
-          Save
+          SAVE
         </button>
         <br />
         <h4>Got Coupon?</h4>
@@ -36,21 +36,26 @@ const Checkout = () => {
       </div>
       <div className="col-md-6">
         <h4>Order Summary</h4>
-        {JSON.stringify(user)}
-        <h1>{total}</h1>
-        {JSON.stringify(products)}
         <hr />
-        <p>Products x</p>
+        <p>Products {products.length}</p>
         <hr />
-        <p>Cart Total:$x</p>
+        {products.map((p, i) => (
+          <div key={i}>
+            <p>
+              {p.product.title} ({p.color}) x {p.count} = {p.product.price * p.count}
+            </p>
+          </div>
+        ))}
+        <hr />
+        <p>Cart Total: {total}</p>
 
         <div className="row">
           <div className="col-md-6">
-            <button className="btn btn-primary">Place Order</button>
+            <button className="btn btn-primary">PLACE ORDER</button>
           </div>
 
           <div className="col-md-6">
-            <button className="btn btn-primary">Place Order</button>
+            <button className="btn btn-primary">EMPTY CART</button>
           </div>
         </div>
       </div>
