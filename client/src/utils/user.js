@@ -19,3 +19,10 @@ export const getUserCart = async (authtoken) =>
       authtoken,
     },
   });
+
+export const emptyUserCart = async (authtoken) =>
+  await axios.delete(`${url}/user/cart`, {
+    headers: {
+      authtoken,
+    },
+  });

@@ -13,6 +13,7 @@ mongoose
   .connect(process.env.MONGO_CONNECT_STIRNG, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useUnifiedTopology: true,
   })
   .then((result) => {
     console.log('Connected to mongoose');
