@@ -63,3 +63,9 @@ exports.emptyCart = async (req, res) => {
   const cart = await Cart.findOneAndRemove({ orderBy: user._id }).exec();
   res.json(cart);
 };
+
+exports.saveAddress = async (req, res) => {
+  const userAddress = await User.findOneAndUpdate({ eamil: req.user.email }, { address: req.body.address }).exec();
+
+  res.json({ ok: true });
+};
