@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const { ObjectId } = mongoose.Schema;
-
 const Schema = mongoose.Schema;
+
+const { ObjectId } = Schema;
 
 const subCategorySchema = new Schema(
   {
