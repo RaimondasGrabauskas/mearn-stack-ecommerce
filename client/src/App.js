@@ -28,6 +28,7 @@ import Cart from './pages/Cart';
 import SideDrawer from './component/drawer/SideDrawer';
 import Checkout from './pages/Checkout';
 import CreateCouponPage from './pages/admin/coupon/CreateCouponPage';
+import Payment from './pages/Payment';
 
 import UserRoute from './component/routes/UserRoute';
 import AdminRoute from './component/routes/AdminRoute';
@@ -196,6 +197,15 @@ const App = () => {
             <AdminRoute>
               <CreateCouponPage />
             </AdminRoute>
+          }
+        />
+        <Route
+          exact
+          path="/payment"
+          element={
+            <UserRoute>
+              <Payment />
+            </UserRoute>
           }
         />
       </Routes>
