@@ -15,10 +15,8 @@ const Cart = () => {
   };
 
   const saveOrderToDb = () => {
-    // console.log('cart', JSON.stringify(cart));
     userCart(cart, user.token)
       .then((res) => {
-        console.log('Cart post res', res);
         if (res.data.ok) navigate('/checkout');
       })
       .catch((err) => console.log('cart save err', err));

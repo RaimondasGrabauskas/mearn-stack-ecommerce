@@ -4,6 +4,7 @@ import { getUserCart, emptyUserCart, saveUserAddress, applyCoupon } from '../uti
 import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { Link } from 'react-router-dom';
 
 const Checkout = () => {
   const [products, setProducts] = useState([]);
@@ -20,10 +21,14 @@ const Checkout = () => {
 
   useEffect(() => {
     getUserCart(user.token).then((res) => {
-      console.log('user cart res', JSON.stringify(res.data, null, 4));
       setProducts(res.data.products);
       setTotal(res.data.cartTotal);
     });
+
+    // return () => {
+    //   setProducts([]);
+    //   setTotal(0);
+    // };
   }, []);
 
   const saveAddressToDb = () => {
@@ -56,16 +61,23 @@ const Checkout = () => {
   };
 
   const applyDiscountCoupon = () => {
-    console.log(coupon, 'coupon');
     applyCoupon(user.token, coupon).then((res) => {
       if (res.data) {
         setTotalAfterDiscount(res.data);
-        // update redux coupon applied
+        // update redux coupon applied true/false
+        dispatch({
+          type: 'COUPON_APPLIED',
+          payload: true,
+        });
       }
 
       if (res.data.err) {
         setDiscountError(res.data.err);
-        // update redux coupon applied
+        // update redux coupon applied true/false
+        dispatch({
+          type: 'COUPON_APPLIED',
+          payload: false,
+        });
       }
     });
   };
@@ -133,7 +145,13 @@ const Checkout = () => {
         <div className="row">
           <div className="col-md-6">
             <button className="btn btn-primary" disabled={!addressSaved || !products.length}>
-              PLACE ORDER
+              {!addressSaved || !products.length ? (
+                'PLACE ORDER'
+              ) : (
+                <Link style={{ color: 'white' }} to="/payment">
+                  PLACE ORDER
+                </Link>
+              )}
             </button>
           </div>
 
