@@ -5,12 +5,19 @@ const Coupon = require('../models/coupon');
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 exports.createPaymentIntent = async (req, res) => {
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: 100,
-    currency: 'usd',
-  });
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: 100,
+      currency: 'usd',
+    });
 
-  res.send({
-    clientSecret: paymentIntent.client_secret,
-  });
+    console.log('PaymentIntent client_secret:', paymentIntent.client_secret);
+
+    res.send({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (error) {
+    console.log('Error creating PaymentIntent:', error.message);
+    res.status(500).send({ error: 'Failed to create PaymentIntent' });
+  }
 };
