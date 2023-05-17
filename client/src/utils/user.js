@@ -48,3 +48,14 @@ export const applyCoupon = async (authtoken, coupon) =>
       },
     }
   );
+
+export const createOder = async (stripeResponse, authtoken) =>
+  await axios.post(
+    `${url}/user/order`,
+    { stripeResponse },
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
