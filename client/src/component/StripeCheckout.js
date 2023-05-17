@@ -2,8 +2,9 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createPaymentIntent } from '../utils/stripe';
-import { Link } from 'react-router-dom';
+import { createOder, emptyUserCart } from '../utils/user';
 
+import { Link } from 'react-router-dom';
 import { Card } from 'antd';
 import { DollarOutlined, CheckOutlined } from '@ant-design/icons';
 import appleMac from '../images/appleMac.png';
@@ -55,6 +56,25 @@ const StripeCheckout = () => {
       setError`Payment failed ${payload.error.message}`;
       setProcessing(false);
     } else {
+      createOder(payload, user.token).then((res) => {
+        if (res.data.ok) {
+          // empty cart from local storage
+          if (typeof window !== 'undefined') localStorage.removeItem('cart');
+          // empty cart from redux
+          dispatch({
+            type: 'ADD_TO_CART',
+            payload: [],
+          });
+          // reset coupon to false
+          dispatch({
+            type: 'COUPON_APPLIED',
+            payload: false,
+          });
+          // empty cart from database
+          emptyUserCart(user.token);
+        }
+      });
+
       setError(null);
       setProcessing(false);
       setSucceeded(true);
